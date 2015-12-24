@@ -98,7 +98,7 @@ bool zfcComparetor::execute( const CString& strPathOldDwg, const CString strPath
 }
 
 //	ファイル状態(更新日時・サイズ)で比較
-bool zfcComparetor::compareFileStatus( const CString& strPathOldDwg, const CString strPathNewDwg ) const
+bool zfcComparetor::compareFileStatus( const CString& strPathOldDwg, const CString strPathNewDwg )
 {
 	bool bContinue = true;
 	CFileStatus fileStatusOld;
@@ -142,8 +142,10 @@ bool zfcComparetor::getAllObjectId( acd::objectIdContainer& conObjectId, AcDbDat
 	auto es = zfcUtility::getAllObjectId( conObjectId, pDb );
 
 	if( Acad::eOk != es ){
-		// todo API調査
-		zfcUtility::writeLog1( IDS_FAIL_TO_GET_ID, pDb->document()->title() );
+		const ACHAR* pFileName = nullptr;
+		
+		if( Acad::eOk == pDb->getFilename(pFileName) )
+			zfcUtility::writeLog1( IDS_FAIL_TO_GET_ID, pFileName );
 		bResult = false;
 	}
 	

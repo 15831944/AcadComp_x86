@@ -5,7 +5,7 @@
  * 図面比較実行ダイアログ
  * 
  */
-class zfcDlgSelectFolder : public CDialogEx
+class zfcDlgSelectFolder : public CDialog
 {
 	DECLARE_DYNAMIC(zfcDlgSelectFolder)
 

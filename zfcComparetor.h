@@ -18,7 +18,7 @@ public:
 	void init();
 
 	//	図面比較を行う
-	Acad::ErrorStatus execute( const CString& strPathOldDwg, const CString strPathNewDwg );
+	bool execute( const CString& strPathOldDwg, const CString strPathNewDwg );
 
 	//	一致図面数
 	int cntCorrespond() const;
@@ -38,7 +38,7 @@ protected:
 	virtual ~zfcComparetor(void);
 
 	//	ファイル状態(更新日時・サイズ)で比較
-	bool compareFileStatus( const CString& strPathOldDwg, const CString strPathNewDwg ) const;
+	bool compareFileStatus( const CString& strPathOldDwg, const CString strPathNewDwg );
 
 	//	図面読み込み
 	bool readDwg( AcDbDatabase*& pDb, const CString& strPath ) const;

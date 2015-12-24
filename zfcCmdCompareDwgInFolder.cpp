@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "resource.h"
+#include "zfcTypeDef.h"
 #include "zfcCmdCompareDwgInFolder.h"
 #include "zfcUtility.h"
 #include "zfcLogger.h"
@@ -119,7 +120,7 @@ bool zfcCmdCompareDwgInFolder::findPath( zfc::pathContainer::const_iterator& itP
 }
 
 //	ê}ñ Çî‰ärÇ∑ÇÈ
-void zfcCmdCompareDwgInFolder::compare( zfc::pathContainer::const_reference pairNew, const zfc::pathContainer& conPathOld ) const
+void zfcCmdCompareDwgInFolder::compare( zfc::pathContainer::const_reference pairNew, const zfc::pathContainer& conPathOld )
 {
 	const CString& strTitleNew = pairNew.first;
 	zfc::pathContainer::const_iterator itOld;
@@ -164,10 +165,10 @@ void zfcCmdCompareDwgInFolder::writeLogResult() const
 	CString strError;
 	CString strResult;
 	
-	AfxFormatString1( strCorrespond, IDS_RESULT_CORRESPOND, std::to_wstring(comparetor.cntCorrespond()).c_str() );
-	AfxFormatString1( strDiscord, IDS_RESULT_DISCORD, std::to_wstring(comparetor.cntDiscord()).c_str() );
-	AfxFormatString1( strWarning, IDS_RESULT_WARNING, std::to_wstring(comparetor.cntWarning()).c_str() );
-	AfxFormatString1( strError, IDS_RESULT_ERROR, std::to_wstring(comparetor.cntError()).c_str() );
+	AfxFormatString1( strCorrespond, IDS_RESULT_CORRESPOND, std::to_wstring((_Longlong)comparetor.cntCorrespond()).c_str() );
+	AfxFormatString1( strDiscord, IDS_RESULT_DISCORD, std::to_wstring((_Longlong)comparetor.cntDiscord()).c_str() );
+	AfxFormatString1( strWarning, IDS_RESULT_WARNING, std::to_wstring((_Longlong)comparetor.cntWarning()).c_str() );
+	AfxFormatString1( strError, IDS_RESULT_ERROR, std::to_wstring((_Longlong)comparetor.cntError()).c_str() );
 
 	strResult.Format( _T("%s %s %s %s"), strCorrespond, strDiscord, strWarning, strError );
 

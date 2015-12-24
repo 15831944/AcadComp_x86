@@ -15,10 +15,15 @@ zfcUtility::~zfcUtility(void)
 Acad::ErrorStatus zfcUtility::readDwg( AcDbDatabase*& pDb, const CString& strPath )
 {
 	Acad::ErrorStatus es = Acad::eOk;
-	//todo API調査
-	pDb = new AcDbDatabase();
+	
+	try{
+		pDb = new AcDbDatabase(false, true);
 
-	pDb->readDwg(strPath);
+		es = pDb->readDwgFile( strPath );
+	}
+	catch( std::bad_alloc& ){
+		es = Acad::eOutOfMemory;
+	}
 
 	return es;
 }
@@ -103,15 +108,12 @@ Acad::ErrorStatus zfcUtility::getAllEntity( zfc::entityContainer& conEntity, AcD
 			bFirstVp = false;
 		}
 		else {
-			es = pEnt->getHandle( handle );
-			
-			if( Acad::eOk == es ){
-				handle.getIntoAsciiBuffer(szHandle);
-				conEntity.insert( zfc::entityContainer::value_type(szHandle, pEnt) );
+			pEnt->getAcDbHandle( handle );		
+			handle.getIntoAsciiBuffer(szHandle);
+			conEntity.insert( zfc::entityContainer::value_type(szHandle, pEnt) );
 
-				if( pEnt->isA()->isEqualTo(AcDbBlockReference::desc() ) )
-					es = getAllAttribute( conEntity, AcDbBlockReference::cast(pEnt), mode );
-			}
+			if( pEnt->isA()->isEqualTo(AcDbBlockReference::desc() ) )
+				es = getAllAttribute( conEntity, AcDbBlockReference::cast(pEnt), mode );
 		}
 	}
 
@@ -134,12 +136,14 @@ Acad::ErrorStatus zfcUtility::getAllAttribute( zfc::entityContainer& conEntity, 
 
 	for( pItrAttr->start(); Acad::eOk == es && !pItrAttr->done(); pItrAttr->step() ){
 		AcDbEntity* pEnt = nullptr;
+		AcDbHandle handle;
 
-		es = pItrAttr->getEntity(pEnt, mode);
-		
-		if( Acad::eOk == es ){
-			conEntity.insert( zfc::entityContainer::value_type(szHandle, pEnt) );
-		}
+		// todo 要動作確認
+		pEnt = pItrAttr->entity();
+		assert( nullptr != pEnt );
+		pEnt->getAcDbHandle(handle);
+		handle.getIntoAsciiBuffer(szHandle);
+		conEntity.insert( zfc::entityContainer::value_type(szHandle, pEnt) );
 	}
 
 	delete pItrAttr;
@@ -156,7 +160,7 @@ CString zfcUtility::logFileName()
 }
 
 //	ファイルパスを返す
-CString zfcUtility::filePath( const CString& strFolderPath, const CString& strFileName, const CString& strExt = _T("") )
+CString zfcUtility::filePath( const CString& strFolderPath, const CString& strFileName, const CString& strExt )
 {
 	TCHAR szPath[MAX_PATH];
 	TCHAR szDrive[_MAX_DRIVE];

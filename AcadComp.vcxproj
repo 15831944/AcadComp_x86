@@ -299,6 +299,7 @@
     <ClInclude Include="rxdebug.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="StdArx.h" />
+    <ClInclude Include="StdZfc.h" />
     <ClInclude Include="zfcCmdCompareDwgInFolder.h" />
     <ClInclude Include="zfcCommand.h" />
     <ClInclude Include="zfcComparetor.h" />

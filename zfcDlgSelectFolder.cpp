@@ -9,10 +9,10 @@
 
 // zfcDlgSelectFolder ダイアログ
 
-IMPLEMENT_DYNAMIC(zfcDlgSelectFolder, CDialogEx)
+IMPLEMENT_DYNAMIC(zfcDlgSelectFolder, CDialog)
 
 zfcDlgSelectFolder::zfcDlgSelectFolder(CWnd* pParent /*=NULL*/)
-	: CDialogEx(zfcDlgSelectFolder::IDD, pParent)
+	: CDialog(zfcDlgSelectFolder::IDD, pParent)
 	, m_strFolderOldDwg(_T(""))
 	, m_strFolderNewDwg(_T(""))
 	, m_strFolderCompoundDwg(_T(""))
@@ -59,7 +59,8 @@ BOOL zfcDlgSelectFolder::checkFolder( int nEditCtrlID ) const
 //	フォルダを選択する
 BOOL zfcDlgSelectFolder::selectFolder( CString& strSelFolder, const CString& strIniFolder )
 {
-	auto pWinApp = reinterpret_cast<CWinAppEx*>( AfxGetApp() );
+	auto pWinApp = dynamic_cast<CWinAppEx*>( AfxGetApp() );
+	assert( nullptr != pWinApp );
 	BOOL bSelect = pWinApp->GetShellManager()->BrowseForFolder(strSelFolder, this, strIniFolder);
 
 	return bSelect;
@@ -67,14 +68,14 @@ BOOL zfcDlgSelectFolder::selectFolder( CString& strSelFolder, const CString& str
 
 void zfcDlgSelectFolder::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CDialog::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDT_FOLDER_OLD_DWG, m_strFolderOldDwg);
 	DDX_Text(pDX, IDC_EDT_FOLDER_NEW_DWG, m_strFolderNewDwg);
 	DDX_Text(pDX, IDC_EDT_FOLDER_COMPOUND_DWG, m_strFolderCompoundDwg);
 }
 
 
-BEGIN_MESSAGE_MAP(zfcDlgSelectFolder, CDialogEx)
+BEGIN_MESSAGE_MAP(zfcDlgSelectFolder, CDialog)
 	ON_BN_CLICKED(IDC_BTN_FOLDER_OLD_DWG, &zfcDlgSelectFolder::OnBnClickedBtnFolderOldDwg)
 	ON_BN_CLICKED(IDC_BTN_FOLDER_NEW_DWG, &zfcDlgSelectFolder::OnBnClickedBtnFolderNewDwg)
 	ON_BN_CLICKED(IDC_BTN_FOLDER_COMPOUND_DWG, &zfcDlgSelectFolder::OnBnClickedBtnFolderCompoundDwg)
