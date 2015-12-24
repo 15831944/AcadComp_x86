@@ -246,6 +246,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="zfcCmdCompareDwgInFolder.cpp" />
+    <ClCompile Include="zfcCommand.cpp" />
+    <ClCompile Include="zfcComparetor.cpp" />
+    <ClCompile Include="zfcDlgSelectFolder.cpp" />
+    <ClCompile Include="zfcLogger.cpp" />
+    <ClCompile Include="zfcUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AcadComp.def" />
@@ -293,6 +299,13 @@
     <ClInclude Include="rxdebug.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="StdArx.h" />
+    <ClInclude Include="zfcCmdCompareDwgInFolder.h" />
+    <ClInclude Include="zfcCommand.h" />
+    <ClInclude Include="zfcComparetor.h" />
+    <ClInclude Include="zfcDlgSelectFolder.h" />
+    <ClInclude Include="zfcLogger.h" />
+    <ClInclude Include="zfcTypeDef.h" />
+    <ClInclude Include="zfcUtility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
